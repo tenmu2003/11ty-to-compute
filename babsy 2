@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Happy Birthday, Babsy 💖</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --accent:#c72c6c;
+    --text:#4b2c3b;
+    --bg1:#fde1ec;
+    --bg2:#fff7f9;
+  }
+  html,body{height:100%;margin:0;font-family:'Inter',sans-serif;background:linear-gradient(135deg,var(--bg1),var(--bg2));-webkit-font-smoothing:antialiased;}
+  #rose-bg{position:fixed;inset:0;background:url('https://i.ibb.co/1RpW1nR/roses-bg.jpg') center/cover no-repeat;opacity:0;transition:opacity 2.2s ease;z-index:0;filter:blur(1px) contrast(0.98);}
+  .stage{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;z-index:2}
+  /* Cover */
+  #cover{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:linear-gradient(135deg,#fff0f4,#fff8fb);cursor:pointer;transition:opacity .7s ease;z-index:5}
+  #cover img{width:130px;max-width:36vw;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.08)}
+  #cover h1{font-family:'Playfair Display',serif;color:var(--accent);margin:0;font-size:2.2rem}
+  #cover p{margin:0;color:#6b3a4c;font-size:1rem}
+  /* Card container */
+  .card{width:100%;max-width:720px;background:rgba(255,255,255,0.85);border-radius:18px;padding:28px 26px;box-shadow:0 12px 40px rgba(80,30,60,0.08);backdrop-filter:blur(4px);text-align:center;position:relative;overflow:hidden}
+  .slide{display:none;opacity:0;transition:opacity .6s ease, transform .6s ease}
+  .slide.show{display:block;opacity:1;transform:translateY(0)}
+  .slide h2{margin:6px 0 8px 0;font-family:'Playfair Display',serif;color:var(--accent);font-size:1.8rem}
+  .slide p{margin:0;color:var(--text);font-size:1.05rem;line-height:1.6}
+  .hint{font-size:.85rem;color:#7a4b5a;margin-top:14px}
+  /* next indicator */
+  .next-dot{position:absolute;right:16px;bottom:14px;width:12px;height:12px;border-radius:50%;background:var(--accent);opacity:.95;box-shadow:0 6px 14px rgba(199,44,108,0.18)}
+  /* floating decorations */
+  .heart, .sparkle{position:fixed;pointer-events:none;z-index:3;opacity:.9}
+  .heart{width:18px;height:18px;background:#ffb6c1;transform:rotate(45deg);border-radius:2px}
+  .heart::before,.heart::after{content:"";position:absolute;width:18px;height:18px;background:inherit;border-radius:50%}
+  .heart::before{top:-9px;left:0} .heart::after{left:9px;top:0}
+  .sparkle{width:7px;height:7px;background:#fff;border-radius:50%}
+  @keyframes floatUp{0%{transform:translateY(0) scale(1)}100%{transform:translateY(-110vh) scale(.9);opacity:0}}
+  /* responsive tweaks */
+  @media (max-width:520px){
+    #cover h1{font-size:1.6rem}
+    .card{padding:20px;border-radius:14px}
+    .slide h2{font-size:1.5rem}
+  }
+</style>
+</head>
+<body>
+
+<div id="rose-bg"></div>
+
+<!-- Opening cover -->
+<div id="cover" onclick="openCard()">
+  <img src="https://i.ibb.co/JqYnpQx/rose-heart.png" alt="rose and heart">
+  <h1>💌 Tap to Open</h1>
+  <p>A little surprise for you, Babsy — tap to begin ✨</p>
+</div>
+
+<!-- Main stage -->
+<div class="stage" aria-live="polite">
+  <div class="card" id="card" role="region" aria-label="Birthday message card">
+    <!-- Slides (tap card to advance) -->
+    <div class="slide" id="s1">
+      <h2>🎉 Happy Birthday, Babsy 💕</h2>
+      <p>Wishing you a day as beautiful as your heart.</p>
+    </div>
+
+    <div class="slide" id="s2">
+      <h2>😊 You brighten my world</h2>
+      <p>You’ve made my world brighter with your smile.</p>
+    </div>
+
+    <div class="slide" id="s3">
+      <h2>🌟 May your day be full</h2>
+      <p>I hope your day is filled with everything you love.</p>
+    </div>
+
+    <div class="slide" id="s4">
+      <h2>🤗 Hugs & Blessings</h2>
+      <p>Sending love, hugs, and endless blessings 🌸</p>
+    </div>
+
+    <div class="slide" id="s5">
+      <h2>🙏 Prayers for you</h2>
+      <p>Praying for your good health and fortune. May all evil stay away from you.</p>
+    </div>
+
+    <div class="slide" id="s6">
+      <h2>🌱 Grow with grace</h2>
+      <p>As you grow may you grow into a good human.</p>
+    </div>
+
+    <div class="slide" id="s7">
+      <h2>💌 From me, to you</h2>
+      <p>Since we will not be together on your birthday, I’m sending this virtual message.<br><br>I hope we will be together soon.<br><br>I love you.<br><br>Yours truly,<br>Sam 💖</p>
+    </div>
+
+    <div class="hint" id="hintText">Tap the card to go to the next slide</div>
+    <div class="next-dot" aria-hidden="true"></div>
+  </div>
+</div>
+
+<!-- Audio (mobile-friendly) -->
+<audio id="music" loop preload="auto">
+  <source src="https://dl.dropboxusercontent.com/scl/fi/0o8zjs2i0sr3afqikzv2y/Home-New-West.mp3?rlkey=63xg7i6n1nz69dcj86rrbsy6g" type="audio/mpeg">
+</audio>
+
+<script>
+  // Slide control
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let idx = 0;
+  let opened = false;
+  const card = document.getElementById('card');
+  const cover = document.getElementById('cover');
+  const roses = document.getElementById('rose-bg');
+  const music = document.getElementById('music');
+  const hint = document.getElementById('hintText');
+
+  function showSlide(i){
+    slides.forEach((s, k) => {
+      s.classList.remove('show');
+      s.style.transform = ''; // reset transform
+    });
+    if (i >= 0 && i < slides.length){
+      slides[i].classList.add('show');
+    }
+    // final slide hint change
+    hint.textContent = (i === slides.length - 1) ? "This is the last slide — tap to play again" : "Tap the card to go to the next slide";
+  }
+
+  // open the card (from cover screen)
+  function openCard(){
+    if (opened) return;
+    opened = true;
+    // fade cover away & fade-in roses
+    cover.style.opacity = '0';
+    setTimeout(()=>{ cover.style.display='none'; roses.style.opacity = '0.72'; }, 700);
+
+    // start music (mobile safe) and show first slide
+    const tryPlay = ()=> music.play().catch(()=>{});
+    tryPlay();
+    document.body.addEventListener('touchstart', tryPlay, {once:true});
+
+    // add lightweight floating hearts & sparkles
+    spawnFloating(18, 26);
+
+    // show slide 1 after tiny delay
+    setTimeout(()=>{ showSlide(0); }, 450);
+  }
+
+  // advance slides on card tap
+  card.addEventListener('click', (e)=>{
+    // if cover was still visible and clicked, openCard() already handles it; otherwise advance
+    if (!opened) return;
+    idx = (idx + 1) % slides.length;
+    showSlide(idx);
+    // if wrapped to 0, also respawn animations softly
+    if (idx === 0) spawnFloating(12, 14);
+  });
+
+  // also allow keyboard right/left navigation for desktop
+  document.addEventListener('keydown', (e)=>{
+    if (!opened) return;
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      idx = (idx + 1) % slides.length;
+      showSlide(idx);
+    } else if (e.key === 'ArrowLeft') {
+      idx = (idx - 1 + slides.length) % slides.length;
+      showSlide(idx);
+    }
+  });
+
+  // create floating hearts and sparkles (lightweight)
+  function spawnFloating(heartsCount = 16, sparkleCount = 20){
+    for (let i=0;i<heartsCount;i++){
+      const h = document.createElement('div');
+      h.className = 'heart';
+      const left = Math.random() * 100;
+      h.style.left = left + 'vw';
+      h.style.bottom = (-10 - Math.random()*6) + 'vh';
+      h.style.background = ["#ffadc6","#ffb6b9","#ffcad4","#ffd6e0"][Math.floor(Math.random()*4)];
+      const dur = 4 + Math.random()*4;
+      h.style.animation = floatUp ${dur}s linear forwards;
+      document.body.appendChild(h);
+      // cleanup after animation
+      setTimeout(()=> h.remove(), (dur+0.2)*1000);
+    }
+    for (let i=0;i<sparkleCount;i++){
+      const s = document.createElement('div');
+      s.className = 'sparkle';
+      s.style.left = Math.random()*100 + 'vw';
+      s.style.bottom = (-6 - Math.random()*4) + 'vh';
+      const dur = 2 + Math.random()*3;
+      s.style.animation = floatUp ${dur}s linear forwards;
+      document.body.appendChild(s);
+      setTimeout(()=> s.remove(), (dur+0.2)*1000);
+    }
+  }
+
+  // accessibility: show first slide if user navigates directly (no cover click)
+  // (keeps behavior predictable)
+  showSlide(-1);
+
+  // small UX: if user taps cover image (instead of card area) trigger openCard as well
+  document.getElementById('cover').addEventListener('keypress', (e)=>{ if(e.key==='Enter') openCard(); });
+</script>
+</body>
+</html>
